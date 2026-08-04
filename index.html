@@ -630,7 +630,7 @@
       document.getElementById('page' + p).classList.remove('hidden');
     }
 
-// ২৩ তারিখটি স্লো মোশনে আসবে এবং বেলুনগুলো সুতোসহ একে একে নিচ থেকে উঠবে
+// ২৩ তারিখ স্লো মোশনে আসবে এবং বেলুন ওঠার পরই Next বাটন নিশ্চিতভাবে আসবে
     function startRollingDate() {
       const dateList = document.getElementById('dateList');
       dateList.innerHTML = "";
@@ -649,8 +649,8 @@
 
       function animateSlot() {
         let distanceRemaining = Math.abs(stopPos - currentTop);
-        // ২৩ নম্বরের কাছাকাছি আসলে গতি স্লো হবে
-        let speed = Math.max(1.2, distanceRemaining * 0.03);
+        // ২৩ নম্বরের কাছে আসলে গতি ধীর (Slow) হবে
+        let speed = Math.max(1.5, distanceRemaining * 0.04);
 
         if (currentTop > stopPos) {
           currentTop -= speed;
@@ -660,27 +660,28 @@
           dateList.style.top = currentTop + "px";
           requestAnimationFrame(animateSlot);
         } else {
-          // ২৩ তারিখ পৌঁছানোর পর গ্লো হবে
+          dateList.style.top = stopPos + "px";
           document.getElementById('targetDate').classList.add('highlight');
           
           setTimeout(() => {
             document.getElementById('blurOverlay').classList.add('active');
             
-            // প্রতিটি বেলুন সুতোর মাধ্যমে একে একে নিচ থেকে ওপরে ভেসে উঠবে
+            // বেলুনগুলো নিচ থেকে সুতোর টানে ভেসে উঠবে
             const balloons = document.querySelectorAll('.balloon-item');
             balloons.forEach((balloon, idx) => {
               setTimeout(() => {
                 balloon.classList.add('show');
-              }, idx * 130); // প্রতিটি অক্ষরের মাঝে ১৩০ মিলি-সেকেন্ডের সুনির্দিষ্ট বিরতি
+              }, idx * 100);
             });
 
-            // সব বেলুন উঠে গেলে NEXT বাটন ও কনফেটি শো করবে
+            // বেলুন উঠতে থাকার ১.২ সেকেন্ড পরেই Next বাটন শো করবে
             setTimeout(() => {
-              document.getElementById('page2NextBtn').classList.remove('hidden');
-              triggerConfetti();
-            }, balloons.length * 130 + 300);
+              const nextBtn = document.getElementById('page2NextBtn');
+              if (nextBtn) nextBtn.classList.remove('hidden');
+              try { triggerConfetti(); } catch(e) {}
+            }, 1200);
 
-          }, 400);
+          }, 300);
         }
       }
 
