@@ -353,9 +353,9 @@
 
   <!-- ================= PAGE 1: LOCK SCREEN ================= -->
   <div id="page1" class="card">
-    <img src="lock_profile.jpg" class="avatar-img" alt="Lock Profile">
-    <h2 style="font-size: 20px;">LOCKED ACCESS 🔒</h2>
-    <p style="font-size: 11px; color: #aaa; margin-top: 4px;">Passkey: 2026</p>
+<img src="lock_profile.jpg" class="avatar-img" alt="Lock Profile" onclick="showPasskey()" style="cursor: pointer;">
+<h2 style="font-size: 20px;">LOCKED ACCESS 🔒</h2>
+<p id="passkeyHint" class="hidden" style="font-size: 12px; color: #ffb703; margin-top: 4px;">Passkey: 2026</p>
     <div id="pinDisplay" class="pin-display">••••</div>
     <div class="keypad">
       <button onclick="pressNum('1')">1</button>
@@ -771,6 +771,9 @@
     }
 
     function closeLetter() { document.getElementById('letterModal').classList.remove('active'); }
+    function showPasskey() {
+  document.getElementById('passkeyHint').classList.remove('hidden');
+}
 
     function triggerConfetti() {
       confetti({ particleCount: 150, spread: 90, origin: { y: 0.6 } });
