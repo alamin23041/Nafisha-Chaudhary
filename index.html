@@ -611,7 +611,7 @@
       document.getElementById('page' + p).classList.remove('hidden');
     }
 
-    // Date Slot Machine Animation & Blurred Balloon Reveal
+// Date Slot Machine Animation (২৩ তারিখের কাছে এসে স্লো হবে)
     function startRollingDate() {
       const dateList = document.getElementById('dateList');
       dateList.innerHTML = "";
@@ -626,14 +626,21 @@
 
       let currentTop = 0;
       let targetIndex = 22;
-      let stopPos = - (targetIndex * 160);
-      let speed = 28;
+      let stopPos = -(targetIndex * 160);
 
-      let interval = setInterval(() => {
-        currentTop -= speed;
-        if(currentTop <= stopPos) {
-          currentTop = stopPos;
-          clearInterval(interval);
+      function animateSlot() {
+        let distanceRemaining = Math.abs(stopPos - currentTop);
+        // ২৩ নম্বরের কাছে আসলে গতি আস্তে আস্তে ধীর (Slow) হবে
+        let speed = Math.max(1.2, distanceRemaining * 0.03);
+
+        if (currentTop > stopPos) {
+          currentTop -= speed;
+          if (currentTop <= stopPos) {
+            currentTop = stopPos;
+          }
+          dateList.style.top = currentTop + "px";
+          requestAnimationFrame(animateSlot);
+        } else {
           document.getElementById('targetDate').classList.add('highlight');
           
           setTimeout(() => {
@@ -650,8 +657,9 @@
             triggerConfetti();
           }, 300);
         }
-        dateList.style.top = currentTop + "px";
-      }, 25);
+      }
+
+      requestAnimationFrame(animateSlot);
     }
 
     // Draggable Photos Mechanics
