@@ -3,10 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happy Birthday Nafisa 💖</title>
+  <title>Happy Birthday Nafisha 💖</title>
   
   <!-- Canvas Confetti Library -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
   
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Dancing+Script:wght@700&family=Hind+Siliguri:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
@@ -132,7 +134,7 @@
     }
     .keypad button:active { background: #ff4d6d; transform: scale(0.92); }
 
-    /* PAGE 2: ROLLING DATE SLOTS & BLUR BALLOONS */
+/* PAGE 2: ROLLING DATE SLOTS & BLUR BALLOONS */
     .date-roller-box {
       height: 160px; overflow: hidden; margin: 15px 0;
       position: relative; border-radius: 20px;
@@ -140,7 +142,8 @@
     }
     .date-roller-list {
       position: absolute; width: 100%; top: 0; left: 0;
-      transition: top 0.1s linear;
+      /* এখানে ট্রানজিশন স্মুথ ও স্লো করার জন্য সময় বাড়িয়ে দেওয়া হয়েছে */
+      transition: top 0.4s cubic-bezier(0.1, 0.7, 0.1, 1); 
     }
     .date-item {
       height: 160px; display: flex; justify-content: center; align-items: center;
@@ -149,6 +152,12 @@
     .date-item.highlight {
       color: #ffd700;
       text-shadow: 0 0 25px #ff4d6d, 0 0 40px #ffd700;
+      /* ২৩ নম্বর আসলে গ্লোয়িং ও একটু জুম হওয়ার স্পেশাল ইফেক্ট */
+      animation: joyaGlow 1.5s infinite alternate;
+    }
+    @keyframes joyaGlow {
+      0% { transform: scale(1); text-shadow: 0 0 20px #ff4d6d; }
+      100% { transform: scale(1.08); text-shadow: 0 0 35px #ffd700, 0 0 50px #ff4d6d; }
     }
 
     /* Date Blur Overlay */
@@ -165,7 +174,7 @@
     }
     .date-blur-overlay.active { opacity: 1; }
 
-    /* Balloon Container */
+    /* Balloon Container & Thread Animation */
     .balloon-wrapper {
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -175,27 +184,37 @@
       pointer-events: none;
     }
     .balloon-row { display: flex; justify-content: center; gap: 5px; }
+    
+    /* বেলুনের সুতো নিচ থেকে ওপরের দিকে টেক্সট টানার অ্যানিমেশন */
     .balloon-item {
-      width: 28px; height: 36px;
+      width: 32px; height: 40px;
       border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
       background: linear-gradient(135deg, #ff4d6d, #ff758f);
       color: #fff; font-family: 'Caveat', cursive;
-      font-size: 20px; font-weight: 700;
+      font-size: 18px; font-weight: 700;
       display: flex; justify-content: center; align-items: center;
       box-shadow: inset -2px -2px 6px rgba(0,0,0,0.3), 0 5px 12px rgba(255,77,109,0.5);
       position: relative; opacity: 0;
-      transform: translateY(100px) scale(0.4);
-      transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.6s ease;
+      /* নিচ থেকে সুতোর টানে ওপরে ওঠার ইফেক্ট */
+      transform: translateY(180px) scale(0.2);
+      transition: transform 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.8s ease;
     }
     .balloon-item::after {
       content: ''; position: absolute;
-      bottom: -8px; left: 50%; transform: translateX(-50%);
-      width: 1px; height: 8px; background: rgba(255,255,255,0.7);
+      bottom: -12px; left: 50%; transform: translateX(-50%);
+      width: 1px; height: 12px; background: rgba(255,255,255,0.8);
     }
     .balloon-item.show { opacity: 1; transform: translateY(0) scale(1); }
     .b-gold { background: linear-gradient(135deg, #ffd700, #ff9e00); color: #222; }
 
-    /* PAGE 3: DRAGGABLE MEMORY GALLERY (Fixed Image Dimensions) */
+    /* Joya নামের জন্য স্পেশাল ফন্ট ও গ্লোয়িং স্টাইল */
+    .special-joya-name {
+      font-family: 'Pacifico', cursive;
+      color: #ff3366;
+      text-shadow: 0 0 15px rgba(255, 51, 102, 0.8);
+    }
+
+    /* PAGE 3: DRAGGABLE MEMORY GALLERY (ফ্রেমের সাইজ বড় করা হয়েছে) */
     .memory-wall {
       position: relative; width: 100%; height: 340px;
       margin-top: 15px; overflow: hidden;
@@ -203,23 +222,23 @@
     }
     .draggable-photo {
       position: absolute;
-      width: 125px; /* Equal Box Width */
+      width: 160px; /* আগের চেয়ে ফ্রেমের সাইজ বড় করা হলো (আগে ১২৫px ছিল) */
       background: #fff;
-      padding: 7px 7px 18px 7px;
-      border-radius: 8px;
-      box-shadow: 0 8px 18px rgba(0,0,0,0.5);
+      padding: 8px 8px 22px 8px;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.6);
       cursor: grab;
       touch-action: none;
     }
     .draggable-photo:active { cursor: grabbing; z-index: 100 !important; }
     .draggable-photo img {
       width: 100%;
-      height: 100px; /* Equal Image Height */
-      object-fit: cover; /* Keeps Aspect Ratio Perfect */
-      border-radius: 4px;
+      height: 130px; /* ছবির উচ্চতাও বড় করা হলো (আগে ১০০px ছিল) */
+      object-fit: cover; 
+      border-radius: 6px;
       pointer-events: none;
     }
-    .draggable-photo p { color: #222; font-size: 11px; margin-top: 5px; font-weight: 700; text-align: center; }
+    .draggable-photo p { color: #222; font-size: 12px; margin-top: 6px; font-weight: 700; text-align: center; }
 
     /* PAGE 4: TWO-PAGE SPREAD DIARY WITH COVER */
     .diary-container {
@@ -520,7 +539,7 @@
   <div class="fullscreen-modal" id="letterModal">
     <div class="letter-sheet">
       <span style="position: absolute; top:12px; right:18px; font-size:22px; cursor:pointer; color:#888;" onclick="closeLetter()">✕</span>
-      <div class="letter-header">Happy Birthday, Nafisa Binte joya ❤️</div>
+      <div class="letter-header">Happy Birthday, Nafisha Binte joya ❤️</div>
       <div class="letter-content" id="typewriterText"></div>
       <div class="sender-name">Wished with love by AlAmin ✨</div>
       <button id="confettiBtn" class="btn-main hidden" onclick="triggerConfetti()" style="width: 100%; margin-top: 15px;">CELEBRATE 🎉</button>
