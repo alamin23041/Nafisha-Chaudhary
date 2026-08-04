@@ -174,44 +174,55 @@
     }
     .date-blur-overlay.active { opacity: 1; }
 
-    /* Balloon Container & Thread Animation */
+/* Balloon Container & Thread Animation */
     .balloon-wrapper {
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
       z-index: 10;
       display: flex; flex-direction: column;
-      justify-content: center; align-items: center; gap: 8px;
+      justify-content: center; align-items: center; gap: 6px;
       pointer-events: none;
     }
-    .balloon-row { display: flex; justify-content: center; gap: 5px; }
+    .balloon-row { display: flex; justify-content: center; gap: 4px; }
     
-    /* বেলুনের সুতো নিচ থেকে ওপরের দিকে টেক্সট টানার অ্যানিমেশন */
+    /* বেলুনের সুতো দিয়ে নিচ থেকে ধীরে ধীরে ওঠার অ্যানিমেশন */
     .balloon-item {
-      width: 32px; height: 40px;
+      width: 28px; height: 36px;
       border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
       background: linear-gradient(135deg, #ff4d6d, #ff758f);
       color: #fff; font-family: 'Caveat', cursive;
-      font-size: 18px; font-weight: 700;
+      font-size: 16px; font-weight: 700;
       display: flex; justify-content: center; align-items: center;
       box-shadow: inset -2px -2px 6px rgba(0,0,0,0.3), 0 5px 12px rgba(255,77,109,0.5);
       position: relative; opacity: 0;
-      /* নিচ থেকে সুতোর টানে ওপরে ওঠার ইফেক্ট */
-      transform: translateY(180px) scale(0.2);
-      transition: transform 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.8s ease;
+      /* নিচ থেকে সুতোর টানে আস্তে আস্তে উঠবে */
+      transform: translateY(220px) scale(0.3);
+      transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.8s ease;
     }
+    
+    /* বেলুনের নিচের সুতো (Thread) */
     .balloon-item::after {
       content: ''; position: absolute;
-      bottom: -12px; left: 50%; transform: translateX(-50%);
-      width: 1px; height: 12px; background: rgba(255,255,255,0.8);
+      bottom: -18px; left: 50%; transform: translateX(-50%);
+      width: 1.5px; height: 18px; background: rgba(255,255,255,0.75);
     }
+    
     .balloon-item.show { opacity: 1; transform: translateY(0) scale(1); }
     .b-gold { background: linear-gradient(135deg, #ffd700, #ff9e00); color: #222; }
 
-    /* Joya নামের জন্য স্পেশাল ফন্ট ও গ্লোয়িং স্টাইল */
-    .special-joya-name {
+    /* JOYA নামের জন্য স্পেশাল ফন্ট ও গ্লোয়িং স্টাইল */
+    .balloon-item.b-joya {
+      width: 32px; height: 40px;
+      background: linear-gradient(135deg, #ff007f, #ff5e00);
+      color: #fff;
       font-family: 'Pacifico', cursive;
-      color: #ff3366;
-      text-shadow: 0 0 15px rgba(255, 51, 102, 0.8);
+      font-size: 17px;
+      box-shadow: 0 0 15px #ff007f, inset -2px -2px 6px rgba(0,0,0,0.3);
+      animation: joyaPulse 1.2s infinite alternate ease-in-out;
+    }
+    @keyframes joyaPulse {
+      0% { transform: translateY(0) scale(1); box-shadow: 0 0 10px #ff007f; }
+      100% { transform: translateY(-4px) scale(1.1); box-shadow: 0 0 22px #ffd700, 0 0 35px #ff007f; }
     }
 
     /* PAGE 3: DRAGGABLE MEMORY GALLERY (ফ্রেমের সাইজ বড় করা হয়েছে) */
