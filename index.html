@@ -9,8 +9,6 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-  
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Dancing+Script:wght@700&family=Hind+Siliguri:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   
   <style>
@@ -107,6 +105,8 @@
       margin-top: 15px;
       box-shadow: 0 0 20px rgba(255, 77, 109, 0.6);
       transition: all 0.3s;
+      position: relative;
+      z-index: 9999 !important;
     }
     .btn-main:active { transform: scale(0.95); }
 
@@ -134,7 +134,7 @@
     }
     .keypad button:active { background: #ff4d6d; transform: scale(0.92); }
 
-/* PAGE 2: ROLLING DATE SLOTS & BLUR BALLOONS */
+    /* PAGE 2: ROLLING DATE SLOTS & BLUR BALLOONS */
     .date-roller-box {
       height: 160px; overflow: hidden; margin: 15px 0;
       position: relative; border-radius: 20px;
@@ -142,8 +142,6 @@
     }
     .date-roller-list {
       position: absolute; width: 100%; top: 0; left: 0;
-      /* এখানে ট্রানজিশন স্মুথ ও স্লো করার জন্য সময় বাড়িয়ে দেওয়া হয়েছে */
-      transition: top 0.4s cubic-bezier(0.1, 0.7, 0.1, 1); 
     }
     .date-item {
       height: 160px; display: flex; justify-content: center; align-items: center;
@@ -152,7 +150,6 @@
     .date-item.highlight {
       color: #ffd700;
       text-shadow: 0 0 25px #ff4d6d, 0 0 40px #ffd700;
-      /* ২৩ নম্বর আসলে গ্লোয়িং ও একটু জুম হওয়ার স্পেশাল ইফেক্ট */
       animation: joyaGlow 1.5s infinite alternate;
     }
     @keyframes joyaGlow {
@@ -174,7 +171,7 @@
     }
     .date-blur-overlay.active { opacity: 1; }
 
-/* Balloon Container & Thread Animation */
+    /* Balloon Container & Thread Animation */
     .balloon-wrapper {
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -185,22 +182,20 @@
     }
     .balloon-row { display: flex; justify-content: center; gap: 4px; }
     
-    /* বেলুনের সুতো দিয়ে নিচ থেকে ধীরে ধীরে ওঠার অ্যানিমেশন */
     .balloon-item {
-      width: 28px; height: 36px;
+      width: 26px; height: 34px;
       border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
       background: linear-gradient(135deg, #ff4d6d, #ff758f);
       color: #fff; font-family: 'Caveat', cursive;
-      font-size: 16px; font-weight: 700;
+      font-size: 15px; font-weight: 700;
       display: flex; justify-content: center; align-items: center;
       box-shadow: inset -2px -2px 6px rgba(0,0,0,0.3), 0 5px 12px rgba(255,77,109,0.5);
       position: relative; opacity: 0;
-      /* নিচ থেকে সুতোর টানে আস্তে আস্তে উঠবে */
       transform: translateY(220px) scale(0.3);
       transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.8s ease;
     }
     
-    /* বেলুনের নিচের সুতো (Thread) */
+    /* সুতো (Thread) Effect */
     .balloon-item::after {
       content: ''; position: absolute;
       bottom: -18px; left: 50%; transform: translateX(-50%);
@@ -212,11 +207,11 @@
 
     /* JOYA নামের জন্য স্পেশাল ফন্ট ও গ্লোয়িং স্টাইল */
     .balloon-item.b-joya {
-      width: 32px; height: 40px;
+      width: 30px; height: 38px;
       background: linear-gradient(135deg, #ff007f, #ff5e00);
       color: #fff;
       font-family: 'Pacifico', cursive;
-      font-size: 17px;
+      font-size: 16px;
       box-shadow: 0 0 15px #ff007f, inset -2px -2px 6px rgba(0,0,0,0.3);
       animation: joyaPulse 1.2s infinite alternate ease-in-out;
     }
@@ -225,7 +220,7 @@
       100% { transform: translateY(-4px) scale(1.1); box-shadow: 0 0 22px #ffd700, 0 0 35px #ff007f; }
     }
 
-    /* PAGE 3: DRAGGABLE MEMORY GALLERY (ফ্রেমের সাইজ বড় করা হয়েছে) */
+    /* PAGE 3: DRAGGABLE MEMORY GALLERY */
     .memory-wall {
       position: relative; width: 100%; height: 340px;
       margin-top: 15px; overflow: hidden;
@@ -233,7 +228,7 @@
     }
     .draggable-photo {
       position: absolute;
-      width: 160px; /* আগের চেয়ে ফ্রেমের সাইজ বড় করা হলো (আগে ১২৫px ছিল) */
+      width: 160px;
       background: #fff;
       padding: 8px 8px 22px 8px;
       border-radius: 10px;
@@ -243,10 +238,8 @@
     }
     .draggable-photo:active { cursor: grabbing; z-index: 100 !important; }
     .draggable-photo img {
-      width: 100%;
-      height: 130px; /* ছবির উচ্চতাও বড় করা হলো (আগে ১০০px ছিল) */
-      object-fit: cover; 
-      border-radius: 6px;
+      width: 100%; height: 130px;
+      object-fit: cover; border-radius: 6px;
       pointer-events: none;
     }
     .draggable-photo p { color: #222; font-size: 12px; margin-top: 6px; font-weight: 700; text-align: center; }
@@ -263,7 +256,6 @@
       position: relative; overflow: hidden;
     }
 
-    /* Diary Page Half Side */
     .page-side {
       flex: 1; height: 100%;
       background: #fdfbf7;
@@ -277,7 +269,6 @@
     .page-side.left { border-top-left-radius: 12px; border-bottom-left-radius: 12px; }
     .page-side.right { border-top-right-radius: 12px; border-bottom-right-radius: 12px; }
 
-    /* Center Spiral Divider */
     .center-binder {
       position: absolute; left: 50%; top: 0; bottom: 0;
       width: 16px; transform: translateX(-50%);
@@ -290,7 +281,6 @@
       border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.4);
     }
 
-    /* Cover Styling */
     .diary-cover {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
       background: linear-gradient(135deg, #800f2f, #590d22);
@@ -304,7 +294,6 @@
       text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); margin-top: 10px;
     }
 
-    /* Inner Diary Elements */
     .d-tag {
       background: #ff758f; color: #fff;
       font-family: 'Caveat', cursive; font-size: 14px; font-weight: bold;
@@ -348,7 +337,6 @@
     .letter-content { font-size: 14px; line-height: 1.8; color: #333; }
     .sender-name { font-family: 'Dancing Script', cursive; font-size: 28px; color: #c9184a; text-align: right; margin-top: 10px; }
 
-    /* Gift Box Wrapper with Cute Girl Emoji */
     .gift-box-wrapper {
       position: relative; display: inline-block; margin: 30px 0 10px 0; cursor: pointer;
     }
@@ -383,9 +371,9 @@
 
   <!-- ================= PAGE 1: LOCK SCREEN ================= -->
   <div id="page1" class="card">
-<img src="lock_profile.jpg" class="avatar-img" alt="Lock Profile" onclick="showPasskey()" style="cursor: pointer;">
-<h2 style="font-size: 20px;">LOCKED ACCESS 🔒</h2>
-<p id="passkeyHint" class="hidden" style="font-size: 12px; color: #ffb703; margin-top: 4px;">Passkey: 2026</p>
+    <img src="lock_profile.jpg" class="avatar-img" alt="Lock Profile" onclick="showPasskey()" style="cursor: pointer;">
+    <h2 style="font-size: 20px;">LOCKED ACCESS 🔒</h2>
+    <p id="passkeyHint" class="hidden" style="font-size: 12px; color: #ffb703; margin-top: 4px;">Passkey: 2026</p>
     <div id="pinDisplay" class="pin-display">••••</div>
     <div class="keypad">
       <button onclick="pressNum('1')">1</button>
@@ -412,7 +400,6 @@
       <div class="date-blur-overlay" id="blurOverlay"></div>
 
       <div class="balloon-wrapper">
-        <!-- ১ম লাইন: HAPPY -->
         <div class="balloon-row">
           <div class="balloon-item b-gold">H</div>
           <div class="balloon-item">A</div>
@@ -420,7 +407,6 @@
           <div class="balloon-item b-gold">P</div>
           <div class="balloon-item">Y</div>
         </div>
-        <!-- ২য় লাইন: BIRTHDAY -->
         <div class="balloon-row">
           <div class="balloon-item b-gold">B</div>
           <div class="balloon-item">I</div>
@@ -431,7 +417,6 @@
           <div class="balloon-item">A</div>
           <div class="balloon-item">Y</div>
         </div>
-        <!-- ৩য় লাইন: JOYA (স্পেশাল স্টাইল) -->
         <div class="balloon-row" style="margin-top: 4px;">
           <div class="balloon-item b-joya">J</div>
           <div class="balloon-item b-joya">O</div>
@@ -439,6 +424,7 @@
           <div class="balloon-item b-joya">A</div>
         </div>
       </div>
+    </div>
 
     <button id="page2NextBtn" class="btn-main hidden" onclick="goToPage(3)">NEXT JOURNEY 🏹</button>
   </div>
@@ -492,7 +478,6 @@
       <!-- INSIDE TWO-PAGE SPREAD -->
       <div class="diary-spread">
         
-        <!-- Center Spiral Binder -->
         <div class="center-binder">
           <div class="binder-ring"></div><div class="binder-ring"></div>
           <div class="binder-ring"></div><div class="binder-ring"></div>
@@ -547,7 +532,6 @@
     <h2>A SECRET LETTER 🎁</h2>
     <p style="font-size: 12px; color: #aaa; margin-top: 5px;">উপহারের বক্সটিতে ক্লিক করে চিঠিটি খুলুন</p>
     
-    <!-- Cute Lady Emoji Sitting on Top of Gift Box -->
     <div class="gift-box-wrapper" onclick="openLetter()">
       <div class="lady-emoji">👸🏻</div>
       <div class="gift-icon">🎁</div>
@@ -623,6 +607,7 @@
       }
     }
     function clearPin() { currentPin = ""; document.getElementById('pinDisplay').innerText = "••••"; }
+    function showPasskey() { document.getElementById('passkeyHint').classList.remove('hidden'); }
 
     // Page Router
     function goToPage(p) {
@@ -630,9 +615,10 @@
       document.getElementById('page' + p).classList.remove('hidden');
     }
 
-// ২৩ তারিখ স্লো মোশনে আসবে এবং বেলুন ওঠার পরই Next বাটন নিশ্চিতভাবে আসবে
+    // ২৩ তারিখ স্লো মোশন অ্যান্ড বেলুন ট্রানজিশন লজিক
     function startRollingDate() {
       const dateList = document.getElementById('dateList');
+      if (!dateList) return;
       dateList.innerHTML = "";
       
       for(let i = 1; i <= 30; i++) {
@@ -649,7 +635,7 @@
 
       function animateSlot() {
         let distanceRemaining = Math.abs(stopPos - currentTop);
-        // ২৩ নম্বরের কাছে আসলে গতি ধীর (Slow) হবে
+        // ২৩ এর কাছে আসলে গতি স্লো হবে
         let speed = Math.max(1.5, distanceRemaining * 0.04);
 
         if (currentTop > stopPos) {
@@ -661,12 +647,15 @@
           requestAnimationFrame(animateSlot);
         } else {
           dateList.style.top = stopPos + "px";
-          document.getElementById('targetDate').classList.add('highlight');
+          
+          const target = document.getElementById('targetDate');
+          if (target) target.classList.add('highlight');
           
           setTimeout(() => {
-            document.getElementById('blurOverlay').classList.add('active');
+            const blurOverlay = document.getElementById('blurOverlay');
+            if (blurOverlay) blurOverlay.classList.add('active');
             
-            // বেলুনগুলো নিচ থেকে সুতোর টানে ভেসে উঠবে
+            // বেলুনগুলো নিচ থেকে সুতোর টানে ওঠা
             const balloons = document.querySelectorAll('.balloon-item');
             balloons.forEach((balloon, idx) => {
               setTimeout(() => {
@@ -674,12 +663,15 @@
               }, idx * 100);
             });
 
-            // বেলুন উঠতে থাকার ১.২ সেকেন্ড পরেই Next বাটন শো করবে
+            // ১ সেকেন্ড পর Next বাটন নিশ্চিতভাবে প্রদর্শন
             setTimeout(() => {
               const nextBtn = document.getElementById('page2NextBtn');
-              if (nextBtn) nextBtn.classList.remove('hidden');
-              try { triggerConfetti(); } catch(e) {}
-            }, 1200);
+              if (nextBtn) {
+                nextBtn.classList.remove('hidden');
+                nextBtn.style.display = 'inline-block';
+              }
+              if (typeof triggerConfetti === 'function') triggerConfetti();
+            }, 1000);
 
           }, 300);
         }
@@ -687,6 +679,7 @@
 
       requestAnimationFrame(animateSlot);
     }
+
     // Draggable Photos Mechanics
     let highestZ = 10;
     document.querySelectorAll('.draggable-photo').forEach(photo => {
@@ -717,26 +710,23 @@
       });
     });
 
-    // 2-PAGE SPREAD DIARY DATA (6 Pages inside 3 Spreads)
+    // 2-PAGE SPREAD DIARY DATA
     const diaryPagesData = [
-      // Spread 1 (Page 1 & 2)
       {
         left: { tag: "Page 1", img: "booklet_pic1.jpg", text: "আজকের এই বিশেষ দিনে তোমার জন্য রইল হৃদয়ের গভীর থেকে ভালোবাসা! 🌟", emoji: "🌸 💖" },
         right: { tag: "Page 2", img: "booklet_pic2.jpg", text: "তোমার চঞ্চলতা আর মিষ্টি হাসিতে চারপাশটা সবসময় সুন্দর থাকে! 🌺", emoji: "🍓 🦄" }
       },
-      // Spread 2 (Page 3 & 4)
       {
         left: { tag: "Page 3", img: "booklet_pic3.jpg", text: "তোমার জীবনের প্রতিটি দিন যেন অনাবিল খুশিতে ভরে ওঠে। ✨", emoji: "🌷 💫" },
         right: { tag: "Page 4", img: "booklet_pic1.jpg", text: "সবসময় এভাবেই হাসিখুশি থেকো, নিজের যত্ন নিও! 🎀", emoji: "👑 🍩" }
       },
-      // Spread 3 (Page 5 & 6)
       {
         left: { tag: "Page 5", img: "booklet_pic2.jpg", text: "আমার জীবনের সুন্দর একটি উপহার হয়ে থাকার জন্য ধন্যবাদ! 💖", emoji: "🐱 🍀" },
         right: { tag: "Page 6", img: "booklet_pic3.jpg", text: "You are truly standard and special in every way! 🎂🎈", emoji: "🎉 🎂" }
       }
     ];
 
-    let currentSpreadState = -1; // -1 = Front Cover, 0..2 = Spreads, 3 = Back Cover
+    let currentSpreadState = -1;
 
     function openDiary() {
       document.getElementById('frontCover').style.display = 'none';
@@ -760,22 +750,19 @@
         backCover.classList.add('hidden');
 
         let data = diaryPagesData[currentSpreadState];
-        // Set Left Page
         document.getElementById('leftTag').innerText = data.left.tag;
         document.getElementById('leftImg').src = data.left.img;
         document.getElementById('leftText').innerText = data.left.text;
         document.getElementById('leftEmoji').innerText = data.left.emoji;
 
-        // Set Right Page
         document.getElementById('rightTag').innerText = data.right.tag;
-        document.getElementById('rightImg').src = data.right.src || data.right.img;
+        document.getElementById('rightImg').src = data.right.img;
         document.getElementById('rightText').innerText = data.right.text;
         document.getElementById('rightEmoji').innerText = data.right.emoji;
 
         indicator.innerText = `Spread ${currentSpreadState + 1} / ${diaryPagesData.length}`;
         nextBtn.classList.add('hidden');
       } else if (currentSpreadState === diaryPagesData.length) {
-        // Back Cover Reached
         backCover.classList.remove('hidden');
         indicator.innerText = "End";
         nextBtn.classList.remove('hidden');
@@ -799,7 +786,7 @@
       }
     }
 
-    // Final Letter Typewriter & Confetti
+    // Typewriter Letter & Confetti
     const letterMsg = "শুভ জন্মদিন, আমার জীবনের সবচেয়ে সুন্দর মানুষ— Nafisa Binte joya! ❤️\n\nতোমার ওই মিষ্টি হাসি দিয়ে আমার প্রতিটা দিন সুন্দর করে তোলার জন্য ধন্যবাদ। সৃষ্টিকর্তার কাছে প্রার্থনা করি, তোমার জীবনের প্রতিটি মুহূর্ত যেন অনাবিল আনন্দ আর ভালোবাসায় ভরে থাকে। দূর থেকে হোক বা পাশে থেকে, আমি সবসময় তোমাকে এভাবেই ভালোবেসে যেতে চাই। Stay blessed and keep smiling always, my love! ✨🌸";
 
     function openLetter() {
@@ -823,9 +810,6 @@
     }
 
     function closeLetter() { document.getElementById('letterModal').classList.remove('active'); }
-    function showPasskey() {
-  document.getElementById('passkeyHint').classList.remove('hidden');
-}
 
     function triggerConfetti() {
       confetti({ particleCount: 150, spread: 90, origin: { y: 0.6 } });
