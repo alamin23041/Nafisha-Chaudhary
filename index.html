@@ -412,6 +412,7 @@
       <div class="date-blur-overlay" id="blurOverlay"></div>
 
       <div class="balloon-wrapper">
+        <!-- ১ম লাইন: HAPPY -->
         <div class="balloon-row">
           <div class="balloon-item b-gold">H</div>
           <div class="balloon-item">A</div>
@@ -419,6 +420,7 @@
           <div class="balloon-item b-gold">P</div>
           <div class="balloon-item">Y</div>
         </div>
+        <!-- ২য় লাইন: BIRTHDAY -->
         <div class="balloon-row">
           <div class="balloon-item b-gold">B</div>
           <div class="balloon-item">I</div>
@@ -429,8 +431,14 @@
           <div class="balloon-item">A</div>
           <div class="balloon-item">Y</div>
         </div>
+        <!-- ৩য় লাইন: JOYA (স্পেশাল স্টাইল) -->
+        <div class="balloon-row" style="margin-top: 4px;">
+          <div class="balloon-item b-joya">J</div>
+          <div class="balloon-item b-joya">O</div>
+          <div class="balloon-item b-joya">Y</div>
+          <div class="balloon-item b-joya">A</div>
+        </div>
       </div>
-    </div>
 
     <button id="page2NextBtn" class="btn-main hidden" onclick="goToPage(3)">NEXT JOURNEY 🏹</button>
   </div>
@@ -622,12 +630,12 @@
       document.getElementById('page' + p).classList.remove('hidden');
     }
 
-// Date Slot Machine Animation (২৩ তারিখের কাছে এসে স্লো হবে)
+// ২৩ তারিখটি স্লো মোশনে আসবে এবং বেলুনগুলো সুতোসহ একে একে নিচ থেকে উঠবে
     function startRollingDate() {
       const dateList = document.getElementById('dateList');
       dateList.innerHTML = "";
       
-      for(let i=1; i<=30; i++) {
+      for(let i = 1; i <= 30; i++) {
         let div = document.createElement('div');
         div.className = 'date-item';
         div.innerText = i;
@@ -641,7 +649,7 @@
 
       function animateSlot() {
         let distanceRemaining = Math.abs(stopPos - currentTop);
-        // ২৩ নম্বরের কাছে আসলে গতি আস্তে আস্তে ধীর (Slow) হবে
+        // ২৩ নম্বরের কাছাকাছি আসলে গতি স্লো হবে
         let speed = Math.max(1.2, distanceRemaining * 0.03);
 
         if (currentTop > stopPos) {
@@ -652,27 +660,32 @@
           dateList.style.top = currentTop + "px";
           requestAnimationFrame(animateSlot);
         } else {
+          // ২৩ তারিখ পৌঁছানোর পর গ্লো হবে
           document.getElementById('targetDate').classList.add('highlight');
           
           setTimeout(() => {
             document.getElementById('blurOverlay').classList.add('active');
             
+            // প্রতিটি বেলুন সুতোর মাধ্যমে একে একে নিচ থেকে ওপরে ভেসে উঠবে
             const balloons = document.querySelectorAll('.balloon-item');
             balloons.forEach((balloon, idx) => {
               setTimeout(() => {
                 balloon.classList.add('show');
-              }, idx * 120);
+              }, idx * 130); // প্রতিটি অক্ষরের মাঝে ১৩০ মিলি-সেকেন্ডের সুনির্দিষ্ট বিরতি
             });
 
-            document.getElementById('page2NextBtn').classList.remove('hidden');
-            triggerConfetti();
-          }, 300);
+            // সব বেলুন উঠে গেলে NEXT বাটন ও কনফেটি শো করবে
+            setTimeout(() => {
+              document.getElementById('page2NextBtn').classList.remove('hidden');
+              triggerConfetti();
+            }, balloons.length * 130 + 300);
+
+          }, 400);
         }
       }
 
       requestAnimationFrame(animateSlot);
     }
-
     // Draggable Photos Mechanics
     let highestZ = 10;
     document.querySelectorAll('.draggable-photo').forEach(photo => {
