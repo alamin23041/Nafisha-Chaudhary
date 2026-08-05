@@ -9,7 +9,8 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Dancing+Script:wght@700&family=Hind+Siliguri:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- Kalam & Shantell Sans ফন্ট যোগ করা হয়েছে আসল হাতে লেখার অনুভূতির জন্য -->
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Dancing+Script:wght@700&family=Hind+Siliguri:wght@400;600;700&family=Kalam:wght@400;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   
   <style>
     * {
@@ -195,7 +196,6 @@
       transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.8s ease;
     }
     
-    /* সুতো (Thread) Effect */
     .balloon-item::after {
       content: ''; position: absolute;
       bottom: -18px; left: 50%; transform: translateX(-50%);
@@ -205,7 +205,6 @@
     .balloon-item.show { opacity: 1; transform: translateY(0) scale(1); }
     .b-gold { background: linear-gradient(135deg, #ffd700, #ff9e00); color: #222; }
 
-    /* JOYA নামের জন্য স্পেশাল ফন্ট ও গ্লোয়িং স্টাইল */
     .balloon-item.b-joya {
       width: 30px; height: 38px;
       background: linear-gradient(135deg, #ff007f, #ff5e00);
@@ -244,10 +243,13 @@
     }
     .draggable-photo p { color: #222; font-size: 12px; margin-top: 6px; font-weight: 700; text-align: center; }
 
-    /* PAGE 4: TWO-PAGE SPREAD DIARY WITH COVER */
+    /* PAGE 4: TWO-PAGE SPREAD DIARY WITH COVER (UPDATED) */
     .diary-container {
-      position: relative; width: 100%; height: 340px;
-      margin: 15px 0; perspective: 1000px;
+      position: relative; 
+      width: 100%; 
+      height: 310px; /* ডায়েরির উচ্চতা কিছুটা ছোট করা হয়েছে */
+      margin: 12px 0; 
+      perspective: 1000px;
     }
     .diary-spread {
       display: flex; width: 100%; height: 100%;
@@ -262,7 +264,7 @@
       background-image: linear-gradient(#e8e2d5 1px, transparent 1px);
       background-size: 100% 22px;
       color: #2b2b2b;
-      padding: 12px 10px;
+      padding: 10px 8px;
       display: flex; flex-direction: column; justify-content: space-between;
       position: relative; text-align: left;
     }
@@ -296,28 +298,48 @@
 
     .d-tag {
       background: #ff758f; color: #fff;
-      font-family: 'Caveat', cursive; font-size: 14px; font-weight: bold;
-      padding: 2px 8px; border-radius: 10px; display: inline-block;
+      font-family: 'Caveat', cursive; font-size: 13px; font-weight: bold;
+      padding: 2px 8px; border-radius: 10px; display: inline-block; align-self: flex-start;
     }
+
+    /* পাসপোর্ট সাইজ ফটো ফ্রেম & ফুল ভিউ স্টাইল */
     .d-img-box {
-      width: 100%; height: 95px; margin: 6px 0; position: relative;
+      width: 70px;            /* পাসপোর্ট সাইজের সাইজ অনুপাতে */
+      height: 90px;
+      margin: 4px auto;
+      position: relative;
+      background: #fff;
+      padding: 3px;
+      border-radius: 4px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      border: 1px solid #ddd;
     }
     .d-img-box img {
-      width: 100%; height: 100%; object-fit: cover;
-      border-radius: 6px; border: 2px solid #fff;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+      width: 100%; 
+      height: 100%; 
+      object-fit: contain;    /* পুরো ছবিটা দেখাবে, কোনো সাইড কাটবে না */
+      border-radius: 2px;
+      background: #f0f0f0;
     }
     .d-tape {
-      position: absolute; top: -6px; left: 50%; transform: translateX(-50%);
-      width: 30px; height: 10px; background: rgba(255, 235, 180, 0.8);
+      position: absolute; top: -5px; left: 50%; transform: translateX(-50%);
+      width: 25px; height: 8px; background: rgba(255, 235, 180, 0.85);
       box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+      z-index: 2;
     }
+
+    /* রিয়েল হাতে লেখার নোট এসএমএস লুক */
     .d-text {
-      font-family: 'Caveat', cursive; font-size: 15px; line-height: 1.25;
-      color: #2b0814; background: #fff8e7; padding: 6px; border-radius: 6px;
-      border-left: 2px solid #ff4d6d;
+      font-family: 'Kalam', 'Caveat', cursive;  /* আসল রিয়েল হাতে লেখার ফন্ট */
+      font-size: 13px; 
+      line-height: 1.35;
+      color: #1a237e;          /* নীল কালির পেন দিয়ে লেখা অনুভূতি */
+      background: transparent; 
+      padding: 4px 2px; 
+      border-left: none;
+      font-weight: 600;
     }
-    .d-emoji { text-align: center; font-size: 16px; margin-top: 2px; }
+    .d-emoji { text-align: center; font-size: 15px; margin-top: 2px; }
 
     /* PAGE 5: SECRET LETTER MODAL & PRINCESS EMOJI */
     .fullscreen-modal {
@@ -635,7 +657,6 @@
 
       function animateSlot() {
         let distanceRemaining = Math.abs(stopPos - currentTop);
-        // ২৩ এর কাছে আসলে গতি স্লো হবে
         let speed = Math.max(1.5, distanceRemaining * 0.04);
 
         if (currentTop > stopPos) {
@@ -655,7 +676,6 @@
             const blurOverlay = document.getElementById('blurOverlay');
             if (blurOverlay) blurOverlay.classList.add('active');
             
-            // বেলুনগুলো নিচ থেকে সুতোর টানে ওঠা
             const balloons = document.querySelectorAll('.balloon-item');
             balloons.forEach((balloon, idx) => {
               setTimeout(() => {
@@ -663,7 +683,6 @@
               }, idx * 100);
             });
 
-            // ১ সেকেন্ড পর Next বাটন নিশ্চিতভাবে প্রদর্শন
             setTimeout(() => {
               const nextBtn = document.getElementById('page2NextBtn');
               if (nextBtn) {
@@ -711,20 +730,20 @@
     });
 
     // 2-PAGE SPREAD DIARY DATA
-const diaryPagesData = [
-  {
-    left: { tag: "Page 1", img: "booklet_pic1.jpg", text: "আজকের এই বিশেষ দিনে তোমার জন্য রইল হৃদয়ের গভীর থেকে ভালোবাসা! 🌟", emoji: "🌸 💖" },
-    right: { tag: "Page 2", img: "booklet_pic2.jpg", text: "তোমার চঞ্চলতা আর মিষ্টি হাসিতে চারপাশটা সবসময় সুন্দর থাকে! 🌺", emoji: "🍓 🦄" }
-  },
-  {
-    left: { tag: "Page 3", img: "booklet_pic3.jpg", text: "তোমার জীবনের প্রতিটি দিন যেন অনাবিল খুশিতে ভরে ওঠে। ✨", emoji: "🌷 💫" },
-    right: { tag: "Page 4", img: "booklet_pic4.jpg", text: "সবসময় এভাবেই হাসিখুশি থেকো, নিজের যত্ন নিও! 🎀", emoji: "👑 🍩" }
-  },
-  {
-    left: { tag: "Page 5", img: "booklet_pic5.jpg", text: "আমার জীবনের সুন্দর একটি উপহার হয়ে থাকার জন্য ধন্যবাদ! 💖", emoji: "🐱 🍀" },
-    right: { tag: "Page 6", img: "booklet_pic6.jpg", text: "You are truly standard and special in every way! 🎂🎈", emoji: "🎉 🎂" }
-  }
-];
+    const diaryPagesData = [
+      {
+        left: { tag: "Page 1", img: "booklet_pic1.jpg", text: "আজকের এই বিশেষ দিনে তোমার জন্য রইল হৃদয়ের গভীর থেকে ভালোবাসা! 🌟", emoji: "🌸 💖" },
+        right: { tag: "Page 2", img: "booklet_pic2.jpg", text: "তোমার চঞ্চলতা আর মিষ্টি হাসিতে চারপাশটা সবসময় সুন্দর থাকে! 🌺", emoji: "🍓 🦄" }
+      },
+      {
+        left: { tag: "Page 3", img: "booklet_pic3.jpg", text: "তোমার জীবনের প্রতিটি দিন যেন অনাবিল খুশিতে ভরে ওঠে। ✨", emoji: "🌷 💫" },
+        right: { tag: "Page 4", img: "booklet_pic1.jpg", text: "সবসময় এভাবেই হাসিখুশি থেকো, নিজের যত্ন নিও! 🎀", emoji: "👑 🍩" }
+      },
+      {
+        left: { tag: "Page 5", img: "booklet_pic2.jpg", text: "আমার জীবনের সুন্দর একটি উপহার হয়ে থাকার জন্য ধন্যবাদ! 💖", emoji: "🐱 🍀" },
+        right: { tag: "Page 6", img: "booklet_pic3.jpg", text: "You are truly standard and special in every way! 🎂🎈", emoji: "🎉 🎂" }
+      }
+    ];
 
     let currentSpreadState = -1;
 
@@ -811,40 +830,38 @@ const diaryPagesData = [
 
     function closeLetter() { document.getElementById('letterModal').classList.remove('active'); }
 
-function triggerConfetti() {
-  // ১. স্ক্রিনের বাম ও ডান দুই দিক থেকে একযোগে ব্লাস্ট
-  confetti({
-    particleCount: 80,
-    angle: 60,
-    spread: 80,
-    origin: { x: 0, y: 0.7 },
-    zIndex: 9999
-  });
-  
-  confetti({
-    particleCount: 80,
-    angle: 120,
-    spread: 80,
-    origin: { x: 1, y: 0.7 },
-    zIndex: 9999
-  });
+    function triggerConfetti() {
+      confetti({
+        particleCount: 80,
+        angle: 60,
+        spread: 80,
+        origin: { x: 0, y: 0.7 },
+        zIndex: 9999
+      });
+      
+      confetti({
+        particleCount: 80,
+        angle: 120,
+        spread: 80,
+        origin: { x: 1, y: 0.7 },
+        zIndex: 9999
+      });
 
-  // ২. মাঝখান থেকে ফটকা ফুটার মতো মাল্টি-লেয়ার কনফেটি ধামাকা (Fireworks)
-  let count = 200;
-  let defaults = { origin: { y: 0.6 }, zIndex: 9999 };
+      let count = 200;
+      let defaults = { origin: { y: 0.6 }, zIndex: 9999 };
 
-  function fire(particleRatio, opts) {
-    confetti(Object.assign({}, defaults, opts, {
-      particleCount: Math.floor(count * particleRatio)
-    }));
-  }
+      function fire(particleRatio, opts) {
+        confetti(Object.assign({}, defaults, opts, {
+          particleCount: Math.floor(count * particleRatio)
+        }));
+      }
 
-  fire(0.25, { spread: 26, startVelocity: 55 });
-  fire(0.2, { spread: 60 });
-  fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
-  fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
-  fire(0.1, { spread: 120, startVelocity: 45 });
-}
+      fire(0.25, { spread: 26, startVelocity: 55 });
+      fire(0.2, { spread: 60 });
+      fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+      fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+      fire(0.1, { spread: 120, startVelocity: 45 });
+    }
   </script>
 </body>
 </html>
