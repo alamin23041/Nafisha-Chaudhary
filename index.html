@@ -637,83 +637,96 @@
       document.getElementById('page' + p).classList.remove('hidden');
     }
 
- // ১-৩১ তারিখ স্ক্রোলিং: ২৩ তারিখে স্লো ও রেড ইফেক্ট, ফাইনাল স্টপ ০৬ তারিখে
+// ১-৩১ পর্যন্ত নিচে নেমে, আবার ওপরে উঠে ২৩ পার করে ০৬-এ এসে থামবে
     function startRollingDate() {
       const dateList = document.getElementById('dateList');
       if (!dateList) return;
       dateList.innerHTML = "";
       
-      // ১ থেকে ৩১ পর্যন্ত তারিখ তৈরি
+      // ১ থেকে ৩১ পর্যন্ত অপশন তৈরি (সবগুলো ক্রমানুসারে থাকবে)
       for(let i = 1; i <= 31; i++) {
         let div = document.createElement('div');
         div.className = 'date-item';
-        div.innerText = i < 10 ? '0' + i : i; // ০১, ০২... ০৬ এভাবে ফরম্যাট করা
+        div.innerText = i < 10 ? '0' + i : i;
         
-        if(i === 23) div.id = "tempSlowDate"; // ২৩ তারিখ স্পেশাল স্লো ইফেক্টের জন্য
-        if(i === 6) div.id = "targetDate";     // ০৬ তারিখ ফাইনাল টার্গেট
+        if(i === 6) div.id = "targetDate";      // ০৬ নম্বর তারিখ (ফাইনাল স্টপ)
+        if(i === 23) div.id = "tempSlowDate";   // ২৩ নম্বর তারিখ (স্লো ও লাল ইফেক্ট)
         
         dateList.appendChild(div);
       }
 
       let currentTop = 0;
-      let targetIndex = 5; // index 5 মানে ৬ নম্বর আইটেম
-      let stopPos = -(targetIndex * 160);
-      let passedTwentyThree = false;
+      let phase = 1; // phase 1: নিচে নেমে ৩১ পর্যন্ত যাওয়া, phase 2: ওপরে উঠে ২৩ পার করে ০৬ এ থামা
+
+      // বিভিন্ন পজিশন ক্যালকুলেশন (প্রতিটি আইটেমের উচ্চতা ১৬০ পিক্সেল)
+      const pos31 = -(30 * 160); // -4800px (৩১ নম্বর)
+      const pos23 = -(22 * 160); // -3520px (২৩ নম্বর)
+      const pos06 = -(5 * 160);  // -800px (০৬ নম্বর)
 
       function animateSlot() {
-        let distanceRemaining = Math.abs(stopPos - currentTop);
-        
-        // স্বাভাবিক স্ক্রোলিং স্পিড
-        let speed = Math.max(1.5, distanceRemaining * 0.04);
-
-        // ২৩ নম্বর আইটেমের পজিশন: index 22 -> -(22 * 160) = -3520px
-        let pos23 = -(22 * 160);
-
-        // ২৩ নম্বর অতিক্রম করার মুহূর্তে স্পিড স্লো হবে এবং রেড কালার ইফেক্ট আসবে
-        if (currentTop <= pos23 + 80 && currentTop >= pos23 - 80) {
-          speed = 0.8; // স্পিড কমিয়ে স্লো-মোশন করা হলো
-          const tempTarget = document.getElementById('tempSlowDate');
-          if (tempTarget && !tempTarget.classList.contains('highlight-red')) {
-            tempTarget.style.color = '#ff4d6d';
-            tempTarget.style.textShadow = '0 0 15px #ff4d6d';
-          }
-        }
-
-        if (currentTop > stopPos) {
+        if (phase === 1) {
+          // ফেজ ১: দ্রুত নিচে নেমে ৩১ পর্যন্ত যাওয়া
+          let speed = 25; 
           currentTop -= speed;
-          if (currentTop <= stopPos) {
-            currentTop = stopPos;
+
+          if (currentTop <= pos31) {
+            currentTop = pos31;
+            phase = 2; // ৩১-এ পৌঁছানোর পর ওপরে ওঠার ফেজ শুরু
           }
           dateList.style.top = currentTop + "px";
           requestAnimationFrame(animateSlot);
-        } else {
-          dateList.style.top = stopPos + "px";
-          
-          // ০৬ নম্বরে এসে ফাইনাল হাইলাইট (গোল্ডেন/কালারফুল গ্লো)
-          const target = document.getElementById('targetDate');
-          if (target) target.classList.add('highlight');
-          
-          setTimeout(() => {
-            const blurOverlay = document.getElementById('blurOverlay');
-            if (blurOverlay) blurOverlay.classList.add('active');
+
+        } else if (phase === 2) {
+          // ফেজ ২: ওপরে ওঠা (৩১ থেকে ০৬ এর দিকে)
+          let distanceRemaining = Math.abs(pos06 - currentTop);
+          let speed = Math.max(3, distanceRemaining * 0.05); // সাধারণ স্পিড
+
+          // ২৩ নম্বরের কাছাকাছি আসলে স্পিড স্লো হবে এবং রেড কালার হবে
+          if (currentTop >= pos23 - 120 && currentTop <= pos23 + 120) {
+            speed = 1.2; // স্লো মোশন স্পিড
+            const tempTarget = document.getElementById('tempSlowDate');
+            if (tempTarget) {
+              tempTarget.style.color = '#ff4d6d';
+              tempTarget.style.textShadow = '0 0 20px #ff4d6d, 0 0 30px #ff0055';
+            }
+          }
+
+          currentTop += speed; // ওপরে ওঠার জন্য যোগ হচ্ছে
+
+          if (currentTop < pos06) {
+            dateList.style.top = currentTop + "px";
+            requestAnimationFrame(animateSlot);
+          } else {
+            // ০৬ নম্বরে এসে পারফেক্টলি থেমে যাওয়া
+            dateList.style.top = pos06 + "px";
             
-            const balloons = document.querySelectorAll('.balloon-item');
-            balloons.forEach((balloon, idx) => {
-              setTimeout(() => {
-                balloon.classList.add('show');
-              }, idx * 100);
-            });
-
+            // ০৬ নম্বরে ফাইনাল গ্লো/হাইলাইট
+            const target = document.getElementById('targetDate');
+            if (target) target.classList.add('highlight');
+            
+            // আগের সব পপ-আপ, বেলুন ও কনফেটি ইফেক্ট (যেভাবে ছিল)
             setTimeout(() => {
-              const nextBtn = document.getElementById('page2NextBtn');
-              if (nextBtn) {
-                nextBtn.classList.remove('hidden');
-                nextBtn.style.display = 'inline-block';
-              }
-              if (typeof triggerConfetti === 'function') triggerConfetti();
-            }, 1000);
+              const blurOverlay = document.getElementById('blurOverlay');
+              if (blurOverlay) blurOverlay.classList.add('active');
+              
+              const balloons = document.querySelectorAll('.balloon-item');
+              balloons.forEach((balloon, idx) => {
+                setTimeout(() => {
+                  balloon.classList.add('show');
+                }, idx * 100);
+              });
 
-          }, 300);
+              setTimeout(() => {
+                const nextBtn = document.getElementById('page2NextBtn');
+                if (nextBtn) {
+                  nextBtn.classList.remove('hidden');
+                  nextBtn.style.display = 'inline-block';
+                }
+                if (typeof triggerConfetti === 'function') triggerConfetti();
+              }, 1000);
+
+            }, 300);
+          }
         }
       }
 
