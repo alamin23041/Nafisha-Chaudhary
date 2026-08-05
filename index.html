@@ -637,27 +637,47 @@
       document.getElementById('page' + p).classList.remove('hidden');
     }
 
-    // ২৩ তারিখ স্লো মোশন অ্যান্ড বেলুন ট্রানজিশন লজিক
+ // ১-৩১ তারিখ স্ক্রোলিং: ২৩ তারিখে স্লো ও রেড ইফেক্ট, ফাইনাল স্টপ ০৬ তারিখে
     function startRollingDate() {
       const dateList = document.getElementById('dateList');
       if (!dateList) return;
       dateList.innerHTML = "";
       
-      for(let i = 1; i <= 30; i++) {
+      // ১ থেকে ৩১ পর্যন্ত তারিখ তৈরি
+      for(let i = 1; i <= 31; i++) {
         let div = document.createElement('div');
         div.className = 'date-item';
-        div.innerText = i;
-        if(i === 06) div.id = "targetDate";
+        div.innerText = i < 10 ? '0' + i : i; // ০১, ০২... ০৬ এভাবে ফরম্যাট করা
+        
+        if(i === 23) div.id = "tempSlowDate"; // ২৩ তারিখ স্পেশাল স্লো ইফেক্টের জন্য
+        if(i === 6) div.id = "targetDate";     // ০৬ তারিখ ফাইনাল টার্গেট
+        
         dateList.appendChild(div);
       }
 
       let currentTop = 0;
-      let targetIndex = 05;
+      let targetIndex = 5; // index 5 মানে ৬ নম্বর আইটেম
       let stopPos = -(targetIndex * 160);
+      let passedTwentyThree = false;
 
       function animateSlot() {
         let distanceRemaining = Math.abs(stopPos - currentTop);
+        
+        // স্বাভাবিক স্ক্রোলিং স্পিড
         let speed = Math.max(1.5, distanceRemaining * 0.04);
+
+        // ২৩ নম্বর আইটেমের পজিশন: index 22 -> -(22 * 160) = -3520px
+        let pos23 = -(22 * 160);
+
+        // ২৩ নম্বর অতিক্রম করার মুহূর্তে স্পিড স্লো হবে এবং রেড কালার ইফেক্ট আসবে
+        if (currentTop <= pos23 + 80 && currentTop >= pos23 - 80) {
+          speed = 0.8; // স্পিড কমিয়ে স্লো-মোশন করা হলো
+          const tempTarget = document.getElementById('tempSlowDate');
+          if (tempTarget && !tempTarget.classList.contains('highlight-red')) {
+            tempTarget.style.color = '#ff4d6d';
+            tempTarget.style.textShadow = '0 0 15px #ff4d6d';
+          }
+        }
 
         if (currentTop > stopPos) {
           currentTop -= speed;
@@ -669,6 +689,7 @@
         } else {
           dateList.style.top = stopPos + "px";
           
+          // ০৬ নম্বরে এসে ফাইনাল হাইলাইট (গোল্ডেন/কালারফুল গ্লো)
           const target = document.getElementById('targetDate');
           if (target) target.classList.add('highlight');
           
@@ -698,7 +719,7 @@
 
       requestAnimationFrame(animateSlot);
     }
-
+    
     // Draggable Photos Mechanics
     let highestZ = 10;
     document.querySelectorAll('.draggable-photo').forEach(photo => {
