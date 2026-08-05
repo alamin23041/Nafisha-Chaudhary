@@ -415,7 +415,7 @@
   <!-- ================= PAGE 2: SPECIAL DATE ANIMATION ================= -->
   <div id="page2" class="card hidden">
     <h2 style="font-size: 20px; color: #ff4d6d;">Finding Your Special Day ✨</h2>
-    <p style="font-size: 12px; color: #aaa; margin-top: 4px;">সবুর করুন, বিশেষ মুহূর্তটি আসছে...</p>
+    <p style="font-size: 12px; color: #aaa; margin-top: 4px;">অপেক্ষা করো, বিশেষ মুহূর্তটি আসছে...</p>
     
     <div class="date-roller-box">
       <div class="date-roller-list" id="dateList"></div>
@@ -454,7 +454,7 @@
   <!-- ================= PAGE 3: DRAGGABLE MEMORY WALL ================= -->
   <div id="page3" class="card hidden">
     <h2 style="font-size: 20px; color: #ff4d6d;">Sweet Memories 📸</h2>
-    <p style="font-size: 11px; color: #ccc;">ছবিগুলো ড্র্যাগ বা টেনে ইচ্ছেমতো সরান</p>
+    <p style="font-size: 11px; color: #ccc;">ছবিগুলো ড্র্যাগ বা টেনে ইচ্ছেমতো দেখতে পারো</p>
     
     <div class="memory-wall" id="memoryWall">
       <div class="draggable-photo" style="top:15px; left:10px; transform: rotate(-8deg);">
@@ -486,7 +486,7 @@
   <!-- ================= PAGE 4: REAL TWO-PAGE SPREAD DIARY ================= -->
   <div id="page4" class="card hidden">
     <h2 style="font-size: 20px; color: #ff4d6d;">My Secret Diary 📖</h2>
-    <p id="diarySubtitle" style="font-size: 11px; color: #aaa;">ডায়েরিটি খুলতে ক্লিক করুন</p>
+    <p id="diarySubtitle" style="font-size: 11px; color: #aaa;">ডায়েরিটি খুলতে ক্লিক করো</p>
 
     <div class="diary-container">
       
@@ -552,7 +552,7 @@
   <!-- ================= PAGE 5: SECRET LETTER TRIGGER ================= -->
   <div id="page5" class="card hidden">
     <h2>A SECRET LETTER 🎁</h2>
-    <p style="font-size: 12px; color: #aaa; margin-top: 5px;">উপহারের বক্সটিতে ক্লিক করে চিঠিটি খুলুন</p>
+    <p style="font-size: 12px; color: #aaa; margin-top: 5px;">উপহারের বক্সটিতে ক্লিক করে চিঠিটি খুলে দেখো</p>
     
     <div class="gift-box-wrapper" onclick="openLetter()">
       <div class="lady-emoji">👸🏻</div>
@@ -647,12 +647,12 @@
         let div = document.createElement('div');
         div.className = 'date-item';
         div.innerText = i;
-        if(i === 23) div.id = "targetDate";
+        if(i === 06) div.id = "targetDate";
         dateList.appendChild(div);
       }
 
       let currentTop = 0;
-      let targetIndex = 22;
+      let targetIndex = 05;
       let stopPos = -(targetIndex * 160);
 
       function animateSlot() {
@@ -732,7 +732,7 @@
     // 2-PAGE SPREAD DIARY DATA
     const diaryPagesData = [
       {
-        left: { tag: "Page 1", img: "book_pic11.jpg", text: "আজকের এই বিশেষ দিনে তোমার জন্য রইল হৃদয়ের গভীর থেকে ভালোবাসা! 🌟", emoji: "🌸 💖" },
+        left: { tag: "Page 1", img: "book_pic11.jpg", text: "আজকের এই বিশেষ দিনে তোমার জন্য রইল হৃদয়ের গভীর থেকে ভালোবাসা ও দোয়া। 🤲 🌟", emoji: "🌸 💖" },
         right: { tag: "Page 2", img: "book_pic2.jpg", text: "তোমার চঞ্চলতা আর মিষ্টি হাসিতে চারপাশটা সবসময় সুন্দর থাকে! 🌺", emoji: "🍓 🦄" }
       },
       {
@@ -806,7 +806,7 @@
     }
 
     // Typewriter Letter & Confetti
-    const letterMsg = "শুভ জন্মদিন, আমার জীবনের সবচেয়ে সুন্দর মানুষ— Nafisa Binte joya! ❤️\n\nতোমার ওই মিষ্টি হাসি দিয়ে আমার প্রতিটা দিন সুন্দর করে তোলার জন্য ধন্যবাদ। সৃষ্টিকর্তার কাছে প্রার্থনা করি, তোমার জীবনের প্রতিটি মুহূর্ত যেন অনাবিল আনন্দ আর ভালোবাসায় ভরে থাকে। দূর থেকে হোক বা পাশে থেকে, আমি সবসময় তোমাকে এভাবেই ভালোবেসে যেতে চাই। Stay blessed and keep smiling always, my love! ✨🌸";
+    const letterMsg = "শুভ জন্মদিন, আমার জীবনের সবচেয়ে সুন্দর ও পছন্দের মানুষ— Nafisa Binte joya! ❤️\n\nতোমার ওই মিষ্টি হাসি দিয়ে প্রতিটা দিন সুন্দর করে উঠুক তোমার জীবন। সৃষ্টিকর্তার কাছে প্রার্থনা করি, তোমার জীবনের প্রতিটি মুহূর্ত যেন অনাবিল আনন্দ আর ভালোবাসায় ভরে থাকে। দূর থেকে হোক বা পাশে থেকে, আমি সবসময় তোমাকে এভাবেই ভালোবেসে যেতে চাই। Stay blessed and keep smiling always, my love! ✨🌸";
 
     function openLetter() {
       document.getElementById('letterModal').classList.add('active');
